@@ -10,7 +10,7 @@ function SidebarView(props) {
         const dishTyp = dishType(dish);
         
         function dishOfInterestACB(){
-            props.onSeekInfoOfDish(dish);
+            props.onSeekDishInfo(dish);
         } 
         
         function removeDishACB() {
