@@ -1,3 +1,4 @@
+import { propsToAttrMap } from "@vue/shared";
 import { dishType,sortDishes,menuPrice } from "../utilities";
 
 function SidebarView(props) {
@@ -7,19 +8,37 @@ function SidebarView(props) {
 
     function dishTableRowCB(dish){
         const dishTyp = dishType(dish);
-        return <tr>
-                 <td><button>x</button></td>
-                 <td><a href="#">{dish.title}</a></td>
+        
+        function dishOfInterestACB(){
+            props.onSeekInfoOfDish(dish);
+        } 
+        
+        function removeDishACB() {
+            props.onDishRemove(dish);
+        }
+
+        return <tr key={dish.id}>
+                 <td><button onClick={removeDishACB}>x</button></td>
+                 <td><a href="#" onClick={dishOfInterestACB}>{dish.title}</a></td>
                  <td>{dishTyp}</td>
                  <td class="qtyAlign">{(dish.pricePerServing*number).toFixed(2)}</td>
                </tr>
     }
 
+    function decreasePeopleACB() {
+        props.onNumberChange(number-1);
+    }
+    
+    function increasePeopleACB(){
+        props.onNumberChange(number+1);
+    }
+
+
     return(
         <div>
-            <button disabled={number===1}>-</button>
+            <button onClick={decreasePeopleACB}  disabled={number===1}>-</button>
             {number}
-            <button>+</button>
+            <button onClick={increasePeopleACB} >+</button>
             <table>
                 <tbody>
                     {dishes.map(dishTableRowCB)}
